@@ -53,7 +53,7 @@ const score = document.querySelector(".score");
             car.setAttribute("class","car");
             gameArea.appendChild(car);
             player.x = car.offsetLeft;
-            player.y = car.offTop;
+            player.y = car.offsetTop;
             console.log(player);
             
            }
