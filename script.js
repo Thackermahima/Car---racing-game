@@ -37,7 +37,8 @@ const score = document.querySelector(".score");
         let ele = document.querySelectorAll(".enemy");
         ele.forEach(function(item){
         if (isCollide(car, item)) {
-                    console.log("HIT");
+              console.log("HIT");
+              endGame();
                   
                 }
           if(item.y>1500){
@@ -81,11 +82,17 @@ const score = document.querySelector(".score");
             console.log(keys);
         }
  
-      
+       function endGame(){
+        player.start = false;
+      score.innerHTML = "Game over <br>Score was "+player.score;
+       startScreen.classList.remove("hide");
+       
+       }
  
         function start() {
             startScreen.classList.add("hide");
-            gameArea.classList.remove("hide");
+            //gameArea.classList.remove("hide");
+            gameArea.innerHTML = "";
             player.start = true;
          for(let x = 0;x<3;x++){
            let enemy =document.createElement("div");
