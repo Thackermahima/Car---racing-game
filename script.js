@@ -2,7 +2,7 @@ const score = document.querySelector(".score");
         const startScreen = document.querySelector(".startScreen");
         const gameArea = document.querySelector(".gameArea");
         let player = {
-        speed:5
+        speed:5 , score: 0
         }
         let keys = {
              ArrowUp : false,
@@ -25,10 +25,21 @@ const score = document.querySelector(".score");
           
         })
       }
+      function isCollide(a, b) {
+            let aRect = a.getBoundingClientRect();
+            let bRect = b.getBoundingClientRect();
+            return !(
+                (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
+        }
+ 
        
        function moveEnemy(){
         let ele = document.querySelectorAll(".enemy");
         ele.forEach(function(item){
+        if (isCollide(car, item)) {
+                    console.log("HIT");
+                  
+                }
           if(item.y>1500){
             item.y-=1500;
             
@@ -42,7 +53,7 @@ const score = document.querySelector(".score");
          
          let car = document.querySelector(".car");
           moveLines();
-          moveEnemy();
+          moveEnemy(car);
          let road = gameArea.getBoundingClientRect();
          
         if(player.start){
@@ -53,6 +64,8 @@ const score = document.querySelector(".score");
          car.style.left = player.x + 'px';
          car.style.top = player.y + 'px';
         window.requestAnimationFrame(playGame);
+         player.score++;
+                score.innerText = "Score: " + player.score;
         }
           }
  
