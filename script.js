@@ -16,8 +16,8 @@ const score = document.querySelector(".score");
       function moveLines(){
         let lines = document.querySelectorAll(".line");
         lines.forEach(function(item){
-          if(item.y>1500){
-            item.y-=600;
+          if(item.y>=1500){
+            item.y-=1500;
             item.style.left = Math.floor(Math.random())*150 +"px";
           }
           item.y+=player.speed;
@@ -33,16 +33,17 @@ const score = document.querySelector(".score");
         }
  
        
-       function moveEnemy(){
+       function moveEnemy(car){
         let ele = document.querySelectorAll(".enemy");
         ele.forEach(function(item){
         if (isCollide(car, item)) {
               console.log("HIT");
-              endGame();
-                  
-                }
+              endGame();           
+           }
           if(item.y>1500){
-            item.y-=1500;
+            item.y=-600;
+            item.style.left = Math.floor(Math.random() * 350) + "px";
+            item.style.backgroundColor = randomColor();
             
           }
           item.y+=player.speed;
@@ -66,27 +67,24 @@ const score = document.querySelector(".score");
          car.style.top = player.y + 'px';
         window.requestAnimationFrame(playGame);
          player.score++;
-                score.innerText = "Score: " + player.score;
+         score.innerText = "Score: " + player.score;
         }
           }
  
         function pressOn(e) {
             e.preventDefault();
             keys[e.key] = true;
-            console.log(keys);
         }
  
         function pressOff(e) {
             e.preventDefault();
             keys[e.key] = false;
-            console.log(keys);
         }
  
-       function endGame(){
-        player.start = false;
-      score.innerHTML = "Game over <br>Score was "+player.score;
-       startScreen.classList.remove("hide");
-       
+      function endGame(){
+       player.start = false;
+       score.innerHTML = "Game over <br>Score was "+player.score;
+       startScreen.classList.remove("hide");  
        }
  
         function start() {
@@ -94,22 +92,41 @@ const score = document.querySelector(".score");
             //gameArea.classList.remove("hide");
             gameArea.innerHTML = "";
             player.start = true;
-         for(let x = 0;x<3;x++){
-           let enemy =document.createElement("div");
-           enemy.classList.add("enemy");
-            enemy.y = ((x+1)*600)*-1;
-           enemy.style.top = enemy.y+"px";
-            enemy.style.left = Math.floor(Math.random())*150 +"px";
-           enemy.style.backgroundColor = "red";
-           gameArea.appendChild(enemy);
-           
-         }   window.requestAnimationFrame(playGame);
+            player.score = 0;
+         for(let x = 0; x<10; x++){
+              let div = document.createElement("div");
+               div.classList.add("line");
+                div.y = x*150;
+                div.style.top = (x*150)+ "px";
+             gameArea.appendChld(div);
+         }
+             window.requestAnimationFrame(playGame);  
             let car = document.createElement("div");
-            car.innerText= "Car";
+           // car.innerText= "Car";
             car.setAttribute("class","car");
             gameArea.appendChild(car);
             player.x = car.offsetLeft;
-            player.y = car.offsetTop;
-            console.log(player);
+            player.y = car.offsetTop;     
+            for(let x = 0;x<3;x++){
+           let enemy =document.createElement("div");
+           enemy.classList.add("enemy");
+           enemy.innerHTML = "<br>" + (x+1);
+           enemy.y = ((x + 1)*600)*-1;
+           enemy.style.top = enemy.y+"px";
+           enemy.style.left = Math.floor(Math.random()*350) +"px";
+           enemy.style.backgroundColor = randomColor();
+           gameArea.appendChild(enemy);
+            }
+         }  
             
-           }
+        function randomColor() {
+            function c() {
+                let hex = Math.floor(Math.random() * 256).toString(16);
+                return ("0" + String(hex)).substr(-2)
+            }
+            return "#" + c() + c() + c();
+        }
+           
+            
+            
+           
