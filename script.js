@@ -88,8 +88,9 @@ const score = document.querySelector(".score");
        }
  
         function start() {
+           
+            gameArea.classList.remove("hide");
             startScreen.classList.add("hide");
-            //gameArea.classList.remove("hide");
             gameArea.innerHTML = "";
             player.start = true;
             player.score = 0;
