@@ -40,7 +40,7 @@ const score = document.querySelector(".score");
               console.log("HIT");
               endGame();           
            }
-          if(item.y>1500){
+          if(item.y>=1500){
             item.y=-600;
             item.style.left = Math.floor(Math.random() * 350) + "px";
             item.style.backgroundColor = randomColor();
@@ -98,7 +98,7 @@ const score = document.querySelector(".score");
                div.classList.add("line");
                 div.y = x*150;
                 div.style.top = (x*150)+ "px";
-             gameArea.appendChld(div);
+             gameArea.appendChild(div);
          }
              window.requestAnimationFrame(playGame);  
             let car = document.createElement("div");
